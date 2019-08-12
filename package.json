@@ -1,0 +1,11 @@
+{
+  "name": "react-express-isomorphic-app",
+  "version": "1.0.0",
+  "description": "Isomorphic app that renders initially on the server before client takes over and transition into single page application, built with React, Express, Webapck and hosted in AWS.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Jeff Wong",
+  "license": "MIT"
+}
