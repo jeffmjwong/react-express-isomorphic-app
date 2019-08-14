@@ -10,9 +10,9 @@ app.use(express.static('public'));
 //   res.sendFile(path.join(__dirname + '/index.html'));
 // });
 
-app.get('/', (req, res) => {
-  res.status(200).send('Hello world from Express!');
-});
+// app.get('/', (req, res) => {
+//   res.status(200).send('Hello world from Express!');
+// });
 
 app.listen(port, () => {
   console.log(`Express server listening on port ${port}...`);
