@@ -7,16 +7,22 @@ export default {
   entry: [
     'webpack-hot-middleware/client',
     path.resolve(__dirname, 'client/')
-  ]
+  ],
   output: {
-    filename: 'server.js',
-    path: path.resolve(__dirname, 'build')
+    path: path.resolve(__dirname, 'build'),
+    filename: 'bundle.js',
+    publicPath: '/'
   },
   devtool: 'eval-source-map',
   plugins: [
     // new HtmlWebpackPlugin({ template: './index.html' })
     new webpack.HotModuleReplacementPlugin(),
-    new webpack.NoEmitOnErrorsPlugin()
+    new webpack.NoEmitOnErrorsPlugin(),
+    new webpack.DefinePlugin({
+      'process.env': {
+        'NODE_ENV': 'development'
+      }
+    })
   ],
   module: {
     rules: [
