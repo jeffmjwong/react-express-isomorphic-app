@@ -1,4 +1,4 @@
-import a from './babeltest1';
+import { a } from './compiled1';
 
 const b = { c: 3 };
 let g = {
