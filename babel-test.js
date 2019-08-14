@@ -5,6 +5,6 @@ let g = {
   ...b,
 };
 
-console.info(g);
+console.log(g);
 
 export default g;
