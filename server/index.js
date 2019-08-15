@@ -18,17 +18,31 @@ if (process.env.NODE_ENV === 'development') {
   app.use(require('webpack-hot-middleware')(compiler));
 }
 
+const getQuestions = () => {
+  fs.readFile(path.resolve(__dirname, '../mock-data/mock-questions.json'), 'utf8', (err, data) => {
+    if (err) throw new Error(err.message);
+
+    return JSON.parse(data);
+  })
+}
+
 // app.get('/html', (req, res) => {
 //   res.sendFile(path.join(__dirname + '/index.html'));
 // });
 
 app.get('/', (req, res) => {
   fs.readFile(path.resolve(__dirname, '../public/index.html'), 'utf8', (err, data) => {
-    if (err) {
-      throw new Error(err.message);
-    } else {
-      res.send(data);
-    }
+    if (err) throw new Error(err.message);
+
+    res.send(data);
+  })
+});
+
+app.get('/api/questions', (req, res) => {
+  fs.readFile(path.resolve(__dirname, '../mock-data/mock-questions.json'), 'utf8', (err, data) => {
+    if (err) throw new Error(err.message);
+
+    res.send(JSON.parse(data));
   })
 });
 
