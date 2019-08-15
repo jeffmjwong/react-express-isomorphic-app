@@ -1,12 +1,24 @@
 import express from 'express';
 import path from 'path';
 import webpack from 'webpack';
-import webpackDevMiddleware from 'webpack-dev-middleware';
-import webpackConfig from '../webpack.config.dev.babel';
 
 const port = process.env.PORT || 3001;
 const app = express();
-const compiler = webpack(webpackConfig);
+
+if (process.env.NODE_ENV === 'development') {
+  console.log('hello development')
+  const config = require('../webpack.config.dev.babel').default;
+  const compiler = webpack(config);
+
+  app.use(require('webpack-dev-middleware')(compiler, {
+    noInfo: true,
+    publicPath: config.output.publicPath,
+  }));
+
+  app.use(require('webpack-hot-middleware')(compiler));
+} else {
+  console.log('hello production or something else')
+}
 
 // app.get('/html', (req, res) => {
 //   res.sendFile(path.join(__dirname + '/index.html'));
