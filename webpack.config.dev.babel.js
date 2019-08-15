@@ -1,6 +1,5 @@
 import webpack from 'webpack';
 import path from 'path';
-import HtmlWebpackPlugin from 'html-webpack-plugin';
 
 export default {
   mode: 'development',
@@ -15,7 +14,6 @@ export default {
   },
   devtool: 'eval-source-map',
   plugins: [
-    new HtmlWebpackPlugin(),
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NoEmitOnErrorsPlugin(),
     new webpack.DefinePlugin({
