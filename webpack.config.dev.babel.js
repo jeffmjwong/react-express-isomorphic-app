@@ -1,6 +1,6 @@
 import webpack from 'webpack';
 import path from 'path';
-// const HtmlWebpackPlugin = require('html-webpack-plugin');
+import HtmlWebpackPlugin from 'html-webpack-plugin';
 
 export default {
   mode: 'development',
@@ -9,13 +9,13 @@ export default {
     path.resolve(__dirname, 'client/')
   ],
   output: {
-    path: path.resolve(__dirname, 'build'),
+    path: path.resolve(__dirname, 'public'),
     filename: 'bundle.js',
     publicPath: '/'
   },
   devtool: 'eval-source-map',
   plugins: [
-    // new HtmlWebpackPlugin({ template: './index.html' })
+    new HtmlWebpackPlugin(),
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NoEmitOnErrorsPlugin(),
     new webpack.DefinePlugin({
