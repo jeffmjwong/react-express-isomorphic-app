@@ -1,5 +1,6 @@
 import express from 'express';
 import path from 'path';
+import fs from 'fs';
 import webpack from 'webpack';
 
 const port = process.env.PORT || 3001;
@@ -22,7 +23,13 @@ if (process.env.NODE_ENV === 'development') {
 // });
 
 app.get('/', (req, res) => {
-  res.sendFile(path.resolve(__dirname, '../public/index.html'));
+  fs.readFile(path.resolve(__dirname, '../public/index.html'), 'utf8', (err, data) => {
+    if (err) {
+      throw new Error(err.message);
+    } else {
+      res.send(data);
+    }
+  })
 });
 
 app.listen(port, () => {
