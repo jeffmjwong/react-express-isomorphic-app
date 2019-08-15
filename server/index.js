@@ -1,10 +1,12 @@
 import express from 'express';
 import path from 'path';
+import webpack from 'webpack';
+import webpackDevMiddleware from 'webpack-dev-middleware';
+import webpackConfig from '../webpack.config.dev.babel';
 
 const port = process.env.PORT || 3001;
 const app = express();
-
-app.use(express.static('public'));
+const compiler = webpack(webpackConfig);
 
 // app.get('/html', (req, res) => {
 //   res.sendFile(path.join(__dirname + '/index.html'));
