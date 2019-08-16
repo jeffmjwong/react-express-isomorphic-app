@@ -53,10 +53,7 @@ const getRequest = async (url, responseType = 'json') => {
 
 app.get('/', (req, res) => {
   readFile(path.resolve(__dirname, '../public/index.html'), 'utf8')
-    .then(result => {
-      console.log(result);
-      res.send(result);
-    })
+    .then(result => res.send(result))
     .catch(err => {
       console.log(err);
       res.status(404).send(err.message);
@@ -65,10 +62,7 @@ app.get('/', (req, res) => {
 
 app.get('/api/mock-questions', (req, res) => {
   readJson(path.resolve(__dirname, '../mock-data/mock-questions.json'), 'utf8')
-    .then(result => {
-      console.log(result);
-      res.json(result);
-    })
+    .then(result => res.json(result))
     .catch(err => {
       console.log(err);
       res.status(404).send(err.message);
@@ -78,14 +72,10 @@ app.get('/api/mock-questions', (req, res) => {
 app.get('/api/mock-questions/:id', (req, res) => {
   readJson(path.resolve(__dirname, '../mock-data/mock-questions.json'), 'utf8')
     .then(result => {
-      console.log(typeof result);
-      console.log(result);
       const question = result.items.find(q => String(q.question_id) === req.params.id);
       question.body = `Mock question body: ${req.params.id}`;
 
       const data = { items: [question] };
-
-      console.log(data);
       res.json(data);
     })
     .catch(err => {
@@ -96,10 +86,7 @@ app.get('/api/mock-questions/:id', (req, res) => {
 
 app.get('/api/real-questions', (req, res) => {
   getRequest(realQuestionsUrl)
-    .then(result => {
-      console.log(result);
-      res.json(result);
-    })
+    .then(result => res.json(result))
     .catch(err => {
       console.log(err);
       res.status(404).send(err.message);
@@ -108,10 +95,7 @@ app.get('/api/real-questions', (req, res) => {
 
 app.get('/api/real-questions/:id', (req, res) => {
   getRequest(realQuestionUrl(req.params.id))
-    .then(result => {
-      console.log(result);
-      res.json(result);
-    })
+    .then(result => res.json(result))
     .catch(err => {
       console.log(err);
       res.status(404).send(err.message);
