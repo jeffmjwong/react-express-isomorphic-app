@@ -29,6 +29,14 @@ const readFile = async (filePath, encoding) => {
   }
 };
 
+const readJson = async (filePath, encoding) => {
+  try {
+    return await fs.readJson(filePath, encoding);
+  } catch(err) {
+    throw new Error(err.message);
+  }
+};
+
 const getRequest = async (url, responseType = 'json') => {
   try {
     const response = await fetch(url);
@@ -56,10 +64,10 @@ app.get('/', (req, res) => {
 });
 
 app.get('/api/mock-questions', (req, res) => {
-  readFile(path.resolve(__dirname, '../mock-data/mock-questions.json'), 'utf8')
+  readJson(path.resolve(__dirname, '../mock-data/mock-questions.json'), 'utf8')
     .then(result => {
       console.log(result);
-      res.send(JSON.parse(result));
+      res.json(result);
     })
     .catch(err => {
       console.log(err);
@@ -71,7 +79,7 @@ app.get('/api/real-questions', (req, res) => {
   getRequest(questions)
     .then(result => {
       console.log(result);
-      res.send(result);
+      res.json(result);
     })
     .catch(err => {
       console.log(err);
