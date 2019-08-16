@@ -2,6 +2,9 @@ import express from 'express';
 import path from 'path';
 import fs from 'fs-extra';
 import webpack from 'webpack';
+import fetch from 'node-fetch';
+
+import { questions, question } from '../mock-data/api-real-url';
 
 const port = process.env.PORT || 3001;
 const app = express();
@@ -26,6 +29,20 @@ const readFile = async (filePath, encoding) => {
   }
 };
 
+const getRequest = async (url, responseType = 'json') => {
+  try {
+    const response = await fetch(url);
+
+    if (responseType === 'text') {
+      return await response.text();
+    } else {
+      return await response.json();
+    }
+  } catch(err) {
+    throw new Error(err.message);
+  }
+}
+
 app.get('/', (req, res) => {
   readFile(path.resolve(__dirname, '../public/index.html'), 'utf8')
     .then(result => {
@@ -43,6 +60,18 @@ app.get('/api/mock-questions', (req, res) => {
     .then(result => {
       console.log(result);
       res.send(JSON.parse(result));
+    })
+    .catch(err => {
+      console.log(err);
+      res.status(404).send(err.message);
+    });
+});
+
+app.get('/api/real-questions', (req, res) => {
+  getRequest(questions)
+    .then(result => {
+      console.log(result);
+      res.send(result);
     })
     .catch(err => {
       console.log(err);
