@@ -1,7 +1,10 @@
 import React from 'react';
+import { connect } from 'react-redux';
 
-const ReactApp = () => (
-  <h2>Hello world from React!</h2>
+const App = () => (
+  <div>
+    <h2>This is an Isomorphic App with React and Express!</h2>
+  </div>
 );
 
-export default ReactApp;
+export default App;
