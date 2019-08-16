@@ -4,7 +4,7 @@ import fs from 'fs-extra';
 import webpack from 'webpack';
 import fetch from 'node-fetch';
 
-import { questions, question } from '../mock-data/api-real-url';
+import { realQuestionsUrl, realQuestionUrl } from '../mock-data/api-real-url';
 
 const port = process.env.PORT || 3001;
 const app = express();
@@ -75,8 +75,39 @@ app.get('/api/mock-questions', (req, res) => {
     });
 });
 
+app.get('/api/mock-questions/:id', (req, res) => {
+  readJson(path.resolve(__dirname, '../mock-data/mock-questions.json'), 'utf8')
+    .then(result => {
+      console.log(typeof result);
+      console.log(result);
+      const question = result.items.find(q => String(q.question_id) === req.params.id);
+      question.body = `Mock question body: ${req.params.id}`;
+
+      const data = { items: [question] };
+
+      console.log(data);
+      res.json(data);
+    })
+    .catch(err => {
+      console.log(err);
+      res.status(404).send(err.message);
+    });
+});
+
 app.get('/api/real-questions', (req, res) => {
-  getRequest(questions)
+  getRequest(realQuestionsUrl)
+    .then(result => {
+      console.log(result);
+      res.json(result);
+    })
+    .catch(err => {
+      console.log(err);
+      res.status(404).send(err.message);
+    });
+});
+
+app.get('/api/real-questions/:id', (req, res) => {
+  getRequest(realQuestionUrl(req.params.id))
     .then(result => {
       console.log(result);
       res.json(result);
