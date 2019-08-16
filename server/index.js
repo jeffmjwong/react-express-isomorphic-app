@@ -1,6 +1,6 @@
 import express from 'express';
 import path from 'path';
-import fs from 'fs';
+import fs from 'fs-extra';
 import webpack from 'webpack';
 
 const port = process.env.PORT || 3001;
@@ -18,32 +18,36 @@ if (process.env.NODE_ENV === 'development') {
   app.use(require('webpack-hot-middleware')(compiler));
 }
 
-const getQuestions = () => {
-  fs.readFile(path.resolve(__dirname, '../mock-data/mock-questions.json'), 'utf8', (err, data) => {
-    if (err) throw new Error(err.message);
-
-    return JSON.parse(data);
-  })
-}
-
-// app.get('/html', (req, res) => {
-//   res.sendFile(path.join(__dirname + '/index.html'));
-// });
+const readFile = async (filePath, encoding) => {
+  try {
+    return await fs.readFile(filePath, encoding);
+  } catch(err) {
+    throw new Error(err.message);
+  }
+};
 
 app.get('/', (req, res) => {
-  fs.readFile(path.resolve(__dirname, '../public/index.html'), 'utf8', (err, data) => {
-    if (err) throw new Error(err.message);
-
-    res.send(data);
-  })
+  readFile(path.resolve(__dirname, '../public/index.html'), 'utf8')
+    .then(result => {
+      console.log(result);
+      res.send(result);
+    })
+    .catch(err => {
+      console.log(err);
+      res.status(404).send(err.message);
+    });
 });
 
-app.get('/api/questions', (req, res) => {
-  fs.readFile(path.resolve(__dirname, '../mock-data/mock-questions.json'), 'utf8', (err, data) => {
-    if (err) throw new Error(err.message);
-
-    res.send(JSON.parse(data));
-  })
+app.get('/api/mock-questions', (req, res) => {
+  readFile(path.resolve(__dirname, '../mock-data/mock-questions.json'), 'utf8')
+    .then(result => {
+      console.log(result);
+      res.send(JSON.parse(result));
+    })
+    .catch(err => {
+      console.log(err);
+      res.status(404).send(err.message);
+    });
 });
 
 app.listen(port, () => {
