@@ -1,9 +1,15 @@
 import React from 'react';
 import { render } from 'react-dom';
+import { Provider as ReduxProvider } from 'react-redux';
 
-import App from './App';
+import configureStore from './redux/configureStore';
+import App from './components/App';
+
+const store = configureStore();
 
 render(
-  <App />,
+  <ReduxProvider store={store}>
+    <App />
+  </ReduxProvider>,
   document.getElementById('app')
 );
