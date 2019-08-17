@@ -1,8 +1,8 @@
-import { combinedReducers } from 'redux';
+import { combineReducers } from 'redux';
 
 import questionReducer from './questionReducer';
 
-const rootReducer = combinedReducers({
+const rootReducer = combineReducers({
   questions: questionReducer,
 })
 

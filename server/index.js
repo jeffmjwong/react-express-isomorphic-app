@@ -1,5 +1,4 @@
 import express from 'express';
-import cors from 'cors';
 import path from 'path';
 import fs from 'fs-extra';
 import webpack from 'webpack';
@@ -9,7 +8,6 @@ import { realQuestionsUrl, realQuestionUrl } from '../mock-data/api-real-url';
 
 const port = process.env.PORT || 3001;
 const app = express();
-app.use(cors());
 
 if (process.env.NODE_ENV === 'development') {
   const config = require('../webpack.config.dev.babel').default;
