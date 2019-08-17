@@ -1,12 +1,9 @@
 import { combinedReducers } from 'redux';
 
-import initialState from './initialState';
+import questionReducer from './questionReducer';
 
-export default (state = initialState, action) => {
-  switch (action.type) {
-    case 'example':
-      return { test: 'New test value from example action type!' };
-    default:
-      return state;
-  }
-};
+const rootReducer = combinedReducers({
+  questions: questionReducer,
+})
+
+export default rootReducer;
