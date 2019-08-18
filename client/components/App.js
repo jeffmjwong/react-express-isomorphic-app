@@ -1,9 +1,9 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 
-import { fetchQuestions } from '../redux/actions/questionActions';
+import * as questionActions from '../redux/actions/questionActions';
 
-const App = ({ questions, fetchQuestions }) => {
+const App = ({ questions, fetchQuestions, fetchMockQuestions }) => {
   useEffect(() => {
     fetchQuestions();
   }, [])
@@ -11,6 +11,11 @@ const App = ({ questions, fetchQuestions }) => {
   return (
     <div>
       <h2>This is an Isomorphic App with React and Express!</h2>
+
+      <div>
+        <button onClick={() => fetchQuestions()}>Fetch Real Questions</button>
+        <button onClick={() => fetchMockQuestions()}>Fetch Mock Questions</button>
+      </div>
 
       {
         questions && questions.map(question => (
@@ -26,7 +31,8 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = {
-  fetchQuestions,
+  fetchQuestions: questionActions.fetchQuestions,
+  fetchMockQuestions: questionActions.fetchMockQuestions,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);
