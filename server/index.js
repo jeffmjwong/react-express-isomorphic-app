@@ -4,7 +4,13 @@ import fs from 'fs-extra';
 import webpack from 'webpack';
 import fetch from 'node-fetch';
 
+import React from 'react';
+import { renderToString } from 'react-dom/server';
+import { Provider as ReduxProvider } from 'react-redux';
+
 import { realQuestionsUrl, realQuestionUrl } from '../mock-data/api-real-url';
+import configureStore from '../client/redux/configureStore';
+import App from '../client/components/App';
 
 const port = process.env.PORT || 3001;
 const app = express();
@@ -51,13 +57,35 @@ const getRequest = async (url, responseType = 'json') => {
   }
 }
 
-app.get('/', (req, res) => {
-  readFile(path.resolve(__dirname, '../public/index.html'), 'utf8')
-    .then(result => res.send(result))
-    .catch(err => {
-      console.log(err);
-      res.status(404).send(err.message);
-    });
+app.get('/', async (req, res) => {
+  let useServerRender = false;
+
+  const initialState = {
+    questions: [],
+  };
+
+  try {
+    let index = await readFile(path.resolve(__dirname, '../public/index.html'), 'utf8');
+    const data = await getRequest(realQuestionsUrl);
+    initialState.questions = [...data.items];
+
+    if (useServerRender) {
+      const store = configureStore(initialState);
+      const renderedApp = renderToString(
+        <ReduxProvider store={store}>
+          <App />
+        </ReduxProvider>
+      );
+
+      index = index.replace('<%= preloadedApplication %>', renderedApp);
+    } else {
+      index = index.replace('<%= preloadedApplication %>', 'Please wait while the application is loaded.');
+    }
+    res.send(index);
+  } catch(err) {
+    console.log(err);
+    res.status(404).send(err.message);
+  }
 });
 
 app.get('/api/mock-questions', (req, res) => {
