@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 
 import * as questionActions from '../redux/actions/questionActions';
+import QuestionList from './QuestionList';
 
 const App = ({ questions, fetchQuestions, fetchMockQuestions }) => {
   useEffect(() => {
@@ -12,7 +13,9 @@ const App = ({ questions, fetchQuestions, fetchMockQuestions }) => {
     <div>
       <h2>This is an Isomorphic App with React and Express!</h2>
 
-      <div>
+      <QuestionList questions={questions} />
+
+      {/* <div>
         <button onClick={() => fetchQuestions()}>Fetch Real Questions</button>
         <button onClick={() => fetchMockQuestions()}>Fetch Mock Questions</button>
       </div>
@@ -21,7 +24,7 @@ const App = ({ questions, fetchQuestions, fetchMockQuestions }) => {
         questions && questions.map(question => (
           <p key={question.question_id}>{ question.question_id }</p>
         ))
-      }
+      } */}
     </div>
   );
 };
