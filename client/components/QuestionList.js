@@ -23,4 +23,8 @@ const QuestionList = ({ questions }) => {
   );
 };
 
-export default QuestionList;
+const mapStateToProps = (state) => ({
+  questions: state.questions,
+});
+
+export default connect(mapStateToProps)(QuestionList);
