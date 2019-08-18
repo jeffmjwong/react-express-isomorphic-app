@@ -11,7 +11,7 @@ const App = ({ questions, fetchQuestions, fetchMockQuestions }) => {
 
   return (
     <div>
-      <h1>This is an Isomorphic App with React and Express!</h1>
+      <h1 className='mb-5'>This is an Isomorphic App with React and Express!</h1>
 
       <div>
         <QuestionList />
