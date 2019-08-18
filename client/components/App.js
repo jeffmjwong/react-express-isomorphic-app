@@ -11,31 +11,18 @@ const App = ({ questions, fetchQuestions, fetchMockQuestions }) => {
 
   return (
     <div>
-      <h2>This is an Isomorphic App with React and Express!</h2>
+      <h1>This is an Isomorphic App with React and Express!</h1>
 
-      <QuestionList questions={questions} />
-
-      {/* <div>
-        <button onClick={() => fetchQuestions()}>Fetch Real Questions</button>
-        <button onClick={() => fetchMockQuestions()}>Fetch Mock Questions</button>
+      <div>
+        <QuestionList />
       </div>
-
-      {
-        questions && questions.map(question => (
-          <p key={question.question_id}>{ question.question_id }</p>
-        ))
-      } */}
     </div>
   );
 };
-
-const mapStateToProps = (state) => ({
-  questions: state.questions,
-});
 
 const mapDispatchToProps = {
   fetchQuestions: questionActions.fetchQuestions,
   fetchMockQuestions: questionActions.fetchMockQuestions,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+export default connect(null, mapDispatchToProps)(App);
