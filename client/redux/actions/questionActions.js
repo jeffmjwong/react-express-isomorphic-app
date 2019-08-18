@@ -7,7 +7,7 @@ export const fetchQuestionsSuccess = (questions) => ({
 });
 
 export const fetchQuestions = () => (dispatch) => {
-  getQuestions()
+  return getQuestions()
     .then(data => {
       dispatch(fetchQuestionsSuccess(data.items))
     })
