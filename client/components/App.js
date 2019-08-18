@@ -3,9 +3,9 @@ import { connect } from 'react-redux';
 
 import { fetchQuestions } from '../redux/actions/questionActions';
 
-const App = ({ questions, dispatch }) => {
+const App = ({ questions, fetchQuestions }) => {
   useEffect(() => {
-    dispatch(fetchQuestions());
+    fetchQuestions();
   }, [])
 
   return (
@@ -25,10 +25,8 @@ const mapStateToProps = (state) => ({
   questions: state.questions,
 });
 
-// const mapDispatchToProps = (dispatch) => ({
-//   actions: {
+const mapDispatchToProps = {
+  fetchQuestions,
+};
 
-//   }
-// });
-
-export default connect(mapStateToProps)(App);
+export default connect(mapStateToProps, mapDispatchToProps)(App);
