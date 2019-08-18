@@ -4,7 +4,7 @@ import path from 'path';
 export default {
   mode: 'development',
   entry: [
-    'webpack-hot-middleware/client',
+    'webpack-hot-middleware/client?reload=true',
     path.resolve(__dirname, 'client/')
   ],
   output: {
