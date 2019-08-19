@@ -22,6 +22,14 @@ const render = (Component) => {
   );
 };
 
+const fetchDataForLocation = (location) => {
+  if (location.pathname === '/') {
+    store.dispatch(questionActions.fetchQuestions());
+  } else if (location.pathname.includes('questions')) {
+    store.dispatch(questionActions.fetchQuestion(location.pathname.split('/')[2]));
+  }
+};
+
 store.subscribe(() => {
   const state = store.getState();
 
@@ -30,7 +38,8 @@ store.subscribe(() => {
   }
 });
 
-store.dispatch(questionActions.fetchQuestions());
+fetchDataForLocation(browserHistory.location);
+browserHistory.listen(fetchDataForLocation);
 
 if (module.hot) {
   module.hot.accept('./components/App', () => {
