@@ -72,8 +72,15 @@ app.get(['/', '/questions/:id'], async (req, res) => {
 
   try {
     let index = await readFile(path.resolve(__dirname, '../public/index.html'), 'utf8');
-    const data = await getRequest(realQuestionsUrl);
-    initialState.questions = [...data.items];
+
+    if (req.params.id) {
+      const question_id = req.params.id;
+      const data = await getRequest(realQuestionUrl(question_id));
+      initialState.questions = [{...data.items[0], question_id}];
+    } else {
+      const data = await getRequest(realQuestionsUrl);
+      initialState.questions = [...data.items];
+    }
 
     if (useServerRender) {
       const store = configureStore(memoryHistory, initialState);
