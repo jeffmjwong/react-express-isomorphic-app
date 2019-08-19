@@ -18,3 +18,12 @@ export const getMockQuestions = async () => {
     throw err;
   }
 };
+
+export const getQuestion = async (id) => {
+  try {
+    const response = await fetch(`${baseUrl}/${id}`);
+    return await response.json();
+  } catch(err) {
+    throw err;
+  }
+};
