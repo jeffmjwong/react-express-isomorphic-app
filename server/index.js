@@ -7,6 +7,8 @@ import fetch from 'node-fetch';
 import React from 'react';
 import { renderToString } from 'react-dom/server';
 import { Provider as ReduxProvider } from 'react-redux';
+import { createMemoryHistory } from 'history';
+import { ConnectedRouter } from 'connected-react-router';
 
 import { realQuestionsUrl, realQuestionUrl } from '../mock-data/api-real-url';
 import configureStore from '../client/redux/configureStore';
@@ -57,12 +59,16 @@ const getRequest = async (url, responseType = 'json') => {
   }
 }
 
-app.get('/', async (req, res) => {
-  let useServerRender = false;
+app.get(['/', '/questions/:id'], async (req, res) => {
+  let useServerRender = true;
 
   const initialState = {
     questions: [],
   };
+
+  const memoryHistory = createMemoryHistory({
+    initialEntries: [req.path],
+  });
 
   try {
     let index = await readFile(path.resolve(__dirname, '../public/index.html'), 'utf8');
@@ -70,10 +76,12 @@ app.get('/', async (req, res) => {
     initialState.questions = [...data.items];
 
     if (useServerRender) {
-      const store = configureStore(initialState);
+      const store = configureStore(memoryHistory, initialState);
       const renderedApp = renderToString(
         <ReduxProvider store={store}>
-          <App />
+          <ConnectedRouter history={memoryHistory}>
+            <App />
+          </ConnectedRouter>
         </ReduxProvider>
       );
 
