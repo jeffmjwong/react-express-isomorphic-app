@@ -10,7 +10,7 @@ export default {
     filename: 'bundle.js',
     publicPath: '/'
   },
-  devtool: 'eval-source-map',
+  // devtool: 'eval-source-map',
   plugins: [
     new webpack.DefinePlugin({
       'process.env': {
