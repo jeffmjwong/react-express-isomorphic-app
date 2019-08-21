@@ -35,7 +35,7 @@ const readFile = async (filePath, encoding) => {
   try {
     return await fs.readFile(filePath, encoding);
   } catch(err) {
-    throw new Error(err.message);
+    throw err;
   }
 };
 
@@ -43,7 +43,7 @@ const readJson = async (filePath, encoding) => {
   try {
     return await fs.readJson(filePath, encoding);
   } catch(err) {
-    throw new Error(err.message);
+    throw err;
   }
 };
 
