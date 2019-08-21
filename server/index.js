@@ -57,7 +57,7 @@ const getRequest = async (url, responseType = 'json') => {
       return await response.json();
     }
   } catch(err) {
-    throw new Error(err.message);
+    throw err;
   }
 }
 
