@@ -32,7 +32,7 @@
     "express": "^4.17.1",
     "fs-extra": "^8.1.0",
     "history": "^4.9.0",
-    "node-fetch": "^2.6.0",
+    "node-fetch": "^2.6.7",
     "react": "^16.9.0",
     "react-dom": "^16.9.0",
     "react-markdown": "^4.1.0",
